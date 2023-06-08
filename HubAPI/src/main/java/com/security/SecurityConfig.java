@@ -33,21 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/configuration/security", "/css/**", "/js/**", "/images/jcaptcha",
                 "/templates/doc/**",
                 "/oauth/token",
-                "/swagger-ui/**",
-                "/api/v1/reader/**"
+                "/swagger-ui/**"
         ).permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/setting/load").hasAnyAuthority("notification.setting.load");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/setting/update").hasAnyAuthority("notification.setting.update");
-
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/request/load").hasAnyAuthority("notification.request.load");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/request/save").hasAnyAuthority("notification.request.save");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/api/v1/request/update").hasAnyAuthority("notification.request.save");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/api/v1/request/delete").hasAnyAuthority("notification.request.delete");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/request/cancelNotification").hasAnyAuthority("notification.request.cancelNotification");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/request/pauseAndResume").hasAnyAuthority("notification.request.pauseAndResume");
-
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/dashboard/load").hasAnyAuthority("notification.dashboard.load");
-
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/reader/**").hasAnyAuthority("ordinary");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new ValidateTokenFilter(getApplicationContext()), BasicAuthenticationFilter.class);
     }

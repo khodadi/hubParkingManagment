@@ -31,7 +31,7 @@ public class EnvUsers extends ABaseEntity {
     @GeneratedValue(generator = "SEQ_ENV_USER", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "SEQ_ENV_USER", allocationSize = 1, sequenceName = "SEQ_ENV_USER")
     private Long userId;
-    @Column(name = "PASSWORD",length = 20)
+    @Column(name = "PASSWORD",length = 200)
     private String password;
     @Column(name = "FIRST_NAME",length = 100)
     private String firstName;

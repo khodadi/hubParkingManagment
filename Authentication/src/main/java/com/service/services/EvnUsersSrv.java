@@ -12,6 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,27 +25,31 @@ import java.util.Collection;
 @Slf4j
 public class EvnUsersSrv implements IEvnUsersSrv, UserDetailsService {
     private final IUserRepo userRepo;
-    public EvnUsersSrv(IUserRepo userRepo) {
+
+    private final PasswordEncoder passwordEncoder;
+    public EvnUsersSrv(IUserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String cellphone) throws UsernameNotFoundException {
-        EnvUsers user = userRepo.findByCellPhone(cellphone);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        EnvUsers user = userRepo.findByUserName(username);
         if(user == null){
             log.error("The User do not find in database");
             throw new UsernameNotFoundException("The User do not find in database");
         }else{
-            log.info("The User find in database : {}",cellphone);
+            log.info("The User find in database : {}",username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getUserType().toString()));
-        return new org.springframework.security.core.userdetails.User(user.getCellPhone(),user.getPassword(),authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),user.getPassword(),authorities);
     }
 
     @Override
     public OutputAPIForm<EnvUserDto> insertUser(EnvUserSaveDto dto) {
         OutputAPIForm<EnvUserDto> retVal = validationUser(dto);
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         if(retVal.isSuccess()){
             try{
                 EnvUsers user = new EnvUsers(dto);

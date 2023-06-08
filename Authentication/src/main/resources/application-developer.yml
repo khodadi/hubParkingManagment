@@ -1,5 +1,5 @@
 server:
-  port: 8092
+  port: 8091
 spring:
   datasource:
     url: jdbc:oracle:thin:@127.0.0.1:1521/RGDB
