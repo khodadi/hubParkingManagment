@@ -12,7 +12,7 @@
     <description>hubParkingManagment</description>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
         <spting.boot.maven.plugin.version>2.3.12.RELEASE</spting.boot.maven.plugin.version>
         <spting.boot.version>2.3.12.RELEASE</spting.boot.version>
         <spring.fox.swagger>3.0.0</spring.fox.swagger>

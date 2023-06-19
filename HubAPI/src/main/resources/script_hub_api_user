@@ -1,0 +1,22 @@
+CREATE SCHEMA hub_api AUTHORIZATION hub_api_user;
+
+CREATE SEQUENCE  hub_api.machine_reader_seq
+    START 1000
+    INCREMENT 1
+    MINVALUE 1000   MAXVALUE 999999999999
+    CACHE 20 CYCLE;
+
+
+CREATE TABLE hub_api.MACHINE_READER (
+        MACHINE_READER_ID     int PRIMARY KEY,
+        IDENTIFIER_CODE       varchar(8) NOT NULL,
+        PARKING_LOT_CODE      varchar(12) ,
+        USER_ID               int,
+        FINE_CODE             varchar(4) ,
+        MACHINE_CODE          varchar(8) ,
+        LOCATION_LATITUDE     int8 ,
+        LOCATION_LONGITUDE    int8,
+        READER_DATE_TIME      date ,
+        API_DATE_TIME         date,
+        GPS_ERROR             float4
+);

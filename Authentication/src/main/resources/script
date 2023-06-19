@@ -3,14 +3,14 @@ CREATE USER hub_user WITH PASSWORD '123456';
 CREATE TABLESPACE hub_data OWNER hub_user LOCATION 'D:\\Tablespace\\Hub\\Data';
 CREATE DATABASE hub OWNER hub_user TABLESPACE hub_data;
 
-CREATE SCHEMA hub_auth AUTHORIZATION hub_user;
+CREATE SCHcreacreate EMA hub_auth AUTHORIZATION hub_user;
 
 grant all privileges on database hub to hub_user;
 
 CREATE SEQUENCE  hub_auth.seq_env_user
     START 1020
     INCREMENT 1
-    MINVALUE 1020   MAXVALUE 999999999999
+    MINVALUE 1020   MAXVALUE 99999999create 9999
     CACHE 20 CYCLE;
 
 CREATE TABLE hub_auth.ENV_USERS (

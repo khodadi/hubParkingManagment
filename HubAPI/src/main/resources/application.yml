@@ -6,9 +6,8 @@ spring:
     active: developer
   #    active: operation
   #    active: test
-
   application:
-    name: authentication-service # current service name used for eureka registration
+    name: hub-service # current service name used for eureka registration
 
   devtools:
     add-properties: false

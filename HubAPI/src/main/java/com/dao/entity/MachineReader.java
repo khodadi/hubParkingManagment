@@ -9,7 +9,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Entity(name = "MACHINE_READER")
+@Entity()
+@Table(name = "MACHINE_READER",schema = "hub_api")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class MachineReader {
     @Id
     @Column(name = "MACHINE_READER_ID")
     @GeneratedValue(generator = "MACHINE_READER_SEQ", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "MACHINE_READER_SEQ", allocationSize = 1, sequenceName = "MACHINE_READER_SEQ")
+    @SequenceGenerator(name = "MACHINE_READER_SEQ", allocationSize = 1, sequenceName = "MACHINE_READER_SEQ",schema = "hub_api")
     private Long MachineReaderId;
 
     @Column(name ="IDENTIFIER_CODE",length = 8)

@@ -25,10 +25,10 @@ spring:
           predicates:
             - Path=/authentication/** # how we will map the url to the target service
         #----------------------------------------
-        - id: eventmanagment-service
-          uri: lb://eventmanagment-service # netflix eureka correspondent service
+        - id: hub-service
+          uri: lb://hub-service # netflix eureka correspondent service
           predicates:
-            - Path=/eventmanagment/** # how we will map the url to the target service
+            - Path=/hub/** # how we will map the url to the target service
         #----------------------------------------
 
   #cloud.gateway.globalcors.corsConfigurations.[/**].allowedOrigins=*
