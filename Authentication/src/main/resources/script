@@ -6,6 +6,8 @@ CREATE DATABASE hub OWNER hub_user TABLESPACE hub_data;
 CREATE SCHcreacreate EMA hub_auth AUTHORIZATION hub_user;
 
 grant all privileges on database hub to hub_user;
+grant all privileges on database hub to hub_auth_user;
+grant all privileges on database hub to hub_api_user;
 
 CREATE SEQUENCE  hub_auth.seq_env_user
     START 1020
