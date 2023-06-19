@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity(name = "ENV_USERS")
+@Entity
+@Table (name = "env_users", schema = "hub_auth")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class EnvUsers extends ABaseEntity {
     @Id
     @Column(name = "USER_ID")
     @GeneratedValue(generator = "SEQ_ENV_USER", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "SEQ_ENV_USER", allocationSize = 1, sequenceName = "SEQ_ENV_USER")
+    @SequenceGenerator(name = "SEQ_ENV_USER", allocationSize = 1, sequenceName = "SEQ_ENV_USER",schema = "hub_auth")
     private Long userId;
     @Column(name = "PASSWORD",length = 200)
     private String password;

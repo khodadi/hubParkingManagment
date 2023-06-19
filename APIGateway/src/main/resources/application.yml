@@ -1,19 +1,47 @@
-server:
-    port: 8761 # port where the server will be running
-
 spring:
+  application:
+    name: gateway-service # gateway service name to be called by it clients
   profiles:
-    active: developer
-#    active: operation
-#    active: test
-eureka:
-  client:
-    register-with-eureka: false # So we don't register the server itself
-    fetch-registry: false # Don't cache its registry information locally
-  server:
-    max-threads-for-peer-replication: 0 # Total number of HTTP connections allowed to peer
-    #eureka nodes for replication. Default is 1000.
-    wait-time-in-ms-when-sync-empty: 5 # After 5 MS server starts is available for requests, given time for
-    # all others services to get themselves registered - 5 MS only for dev mode
-    # in average, each service takes 30 seconds to get registered (3 health requests)
-    enableSelfPreservation: false # check client is up or down or killed
+    active: developer # default profile
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowed-origins: "http://localhost:3000,http://localhost:3001,http://172.24.66.76:8082,http://172.24.66.76:8086"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+
+      discovery:
+        locator:
+          enabled: true # use netflix eureka discovery service
+          #lower-case-service-id: true # debug in camelCase service name
+      routes:
+        - id: authentication-service
+          uri: lb://authentication-service # netflix eureka correspondent service
+          predicates:
+            - Path=/authentication/** # how we will map the url to the target service
+        #----------------------------------------
+        - id: eventmanagment-service
+          uri: lb://eventmanagment-service # netflix eureka correspondent service
+          predicates:
+            - Path=/eventmanagment/** # how we will map the url to the target service
+        #----------------------------------------
+
+  #cloud.gateway.globalcors.corsConfigurations.[/**].allowedOrigins=*
+  #spring.cloud.gateway.globalcors.corsConfigurations.[/**].allowedMethods=GET,POST,PUT,OPTIONS
+  #spring.cloud.gateway.globalcors.corsConfigurations.[/**].allowCredentials=true
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    configUrl: ${server.servlet.contextPath}/v3/api-docs/swagger-config
+    url: ${server.servlet.contextPath}/v3/api-docs
+    urls:
+      - name: authentication
+        url: /authentication/v3/api-docs
+      - name: hub
+        url: /hub/v3/api-docs

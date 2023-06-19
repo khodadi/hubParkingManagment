@@ -1,0 +1,35 @@
+CREATE USER hub_user WITH PASSWORD '123456';
+
+CREATE TABLESPACE hub_data OWNER hub_user LOCATION 'D:\\Tablespace\\Hub\\Data';
+CREATE DATABASE hub OWNER hub_user TABLESPACE hub_data;
+
+CREATE SCHEMA hub_auth AUTHORIZATION hub_user;
+
+grant all privileges on database hub to hub_user;
+
+CREATE SEQUENCE  hub_auth.seq_env_user
+    START 1020
+    INCREMENT 1
+    MINVALUE 1020   MAXVALUE 999999999999
+    CACHE 20 CYCLE;
+
+CREATE TABLE hub_auth.ENV_USERS (
+                       USER_ID               int PRIMARY KEY,
+                       PASSWORD              varchar(200) NOT NULL,
+                       FIRST_NAME            varchar(100) ,
+                       LAST_NAME             varchar(100) ,
+                       EMAIL                 varchar(100) ,
+                       USER_NAME             varchar(20) ,
+                       CELLPHONE             varchar(13) ,
+                       LAST_LOGIN            date,
+                       LAST_LOGIN_IP         varchar(15) ,
+                       CURRENT_LOGIN         date,
+                       CURRENT_LOGIN_IP      varchar(15) ,
+                       UNSUCCESSFUL_TRY      int,
+                       DEACTIVATION_REASON   int,
+                       USER_TYPE             int,
+                       CREATION_DATE         date,
+                       CREATOR_USER_ID       int,
+                       LAST_UPDATE           date,
+                       UPDATER_USER_ID       int
+);
