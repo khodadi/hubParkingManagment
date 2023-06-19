@@ -7,6 +7,7 @@ CREATE SEQUENCE  hub_api.machine_reader_seq
     CACHE 20 CYCLE;
 
 
+
 CREATE TABLE hub_api.MACHINE_READER (
         MACHINE_READER_ID     int PRIMARY KEY,
         IDENTIFIER_CODE       varchar(8) NOT NULL,
