@@ -4,6 +4,10 @@ import com.api.form.OutputAPIForm;
 import com.basedata.CodeException;
 import com.service.dto.EnvUserSaveDto;
 import com.service.services.IEvnUsersSrv;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,19 @@ public class ManipulateUser {
 
     @Autowired
     private IEvnUsersSrv iEvnUsersSrv;
+
+//    @Operation(
+//            security={ @SecurityRequirement(name="bearerToken") },
+//            parameters={
+//                        @Parameter(
+//                                name="authorization",
+//                                in= ParameterIn.HEADER,
+//                                required=true
+//                        )
+//            }
+//    )
+
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @PostMapping("/save")
     public ResponseEntity<OutputAPIForm> saveUser(@RequestBody EnvUserSaveDto user){
         OutputAPIForm retVal = new OutputAPIForm();
