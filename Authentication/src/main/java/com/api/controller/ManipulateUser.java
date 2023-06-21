@@ -56,5 +56,19 @@ public class ManipulateUser {
         return ResponseEntity.created(uri).body(retVal);
     }
 
+    @PostMapping("/load")
+    public ResponseEntity<OutputAPIForm> saveUser(@RequestBody String userName){
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/load").toUriString());
+        try{
+            retVal = iEvnUsersSrv.getUser(userName);
+        }catch (Exception e){
+            log.error("Error in load user",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+
 
 }

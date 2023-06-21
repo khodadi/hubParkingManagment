@@ -42,6 +42,7 @@ public class ValidateTokenFilter extends OncePerRequestFilter {
                 Arrays.stream(roles).forEach(role ->{
                     authorities.add(new SimpleGrantedAuthority(role));
                 });
+
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,null,authorities);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 filterChain.doFilter(request,response);

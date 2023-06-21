@@ -12,9 +12,8 @@ public enum CodeException {
     INVALID_LANGUAGE(8),
     INVALID_USERNAME(9),
     INVALID_FORMAT(10),
-    INVALID_DATE(11);
-
-
+    INVALID_DATE(11),
+    DUPLICATE_MACHINE(12);
 
     private int codeException;
     CodeException(int code) {

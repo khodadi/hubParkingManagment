@@ -73,12 +73,32 @@ public class EvnUsersSrv implements IEvnUsersSrv, UserDetailsService {
             if(retVal.isSuccess() && userRepo.findByUserName(dto.getUserName()) != null){
                 retVal.setSuccess(false);
                 retVal.getErrors().add(CodeException.INVALID_USERNAME);
-            };
+            }
         }catch (Exception e){
             log.error(e.getMessage());
             retVal.setSuccess(false);
             retVal.getErrors().add(CodeException.UNDEFINED);
         }
         return retVal;
+    }
+
+    public OutputAPIForm getUser(String userName){
+        OutputAPIForm retVal = new OutputAPIForm();
+        try{
+            EnvUsers user =  userRepo.findByUserName(userName);
+            if(user != null){
+                EnvUserDto userDto = new EnvUserDto(user);
+                retVal.setData(userDto);
+            }else{
+                retVal.setSuccess(false);
+                retVal.getErrors().add(CodeException.INVALID_USERNAME);
+            }
+        }catch (Exception e){
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.INVALID_USERNAME);
+            log.error(e.getMessage());
+        }
+        return retVal;
+
     }
 }

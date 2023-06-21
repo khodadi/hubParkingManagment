@@ -12,6 +12,5 @@ public class AppServiceRecovery {
     public static void main(String[] args) {
         SpringApplication.run(AppServiceRecovery.class, args);
     }
-
 }
 

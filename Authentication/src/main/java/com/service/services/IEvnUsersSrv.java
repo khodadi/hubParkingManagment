@@ -6,4 +6,5 @@ import com.service.dto.EnvUserSaveDto;
 
 public interface IEvnUsersSrv {
     OutputAPIForm<EnvUserDto> insertUser(EnvUserSaveDto userDto);
+    OutputAPIForm getUser(String userName);
 }
