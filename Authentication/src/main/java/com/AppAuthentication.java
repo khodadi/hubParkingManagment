@@ -31,7 +31,6 @@ public class AppAuthentication extends SpringBootServletInitializer {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)

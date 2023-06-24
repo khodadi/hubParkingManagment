@@ -10,7 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class AppHub extends SpringBootServletInitializer {
+
     public static void main(String[] args) {
         SpringApplication.run(AppHub.class, args);
     }
+
 }

@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui/**"
         ).permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/reader/**").hasAnyAuthority("ordinary");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/machine/**").hasAnyAuthority("ordinary");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new ValidateTokenFilter(getApplicationContext()), BasicAuthenticationFilter.class);
     }

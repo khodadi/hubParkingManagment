@@ -5,6 +5,7 @@ import com.api.form.OutputAPIForm;
 import com.basedata.CodeException;
 import com.dao.entity.Machine;
 import com.dao.repo.IMachine;
+import com.service.dto.BaseMachineDto;
 import com.service.dto.MachineDto;
 import com.utility.DateUtility;
 import com.utility.NumberUtility;
@@ -38,7 +39,7 @@ public class MachineSrv implements IMachineSrv{
             if(retVal.isSuccess()){
                 Machine machine = new Machine(dto);
                 machineRepo.save(machine);
-
+                retVal.setData(new BaseMachineDto(machine));
             }
         }catch (Exception e) {
             retVal.setSuccess(false);
