@@ -1,6 +1,7 @@
 package com.service.dto;
 
 import com.basedata.MachineType;
+import com.basedata.StateOfMachine;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,5 @@ public class MachineDto {
     private String identifierCode;
     private MachineType machineType;
     private int timeInterval;
-    private boolean state;
+    private StateOfMachine state;
 }

@@ -35,3 +35,46 @@ CREATE TABLE hub_auth.ENV_USERS (
                        LAST_UPDATE           date,
                        UPDATER_USER_ID       int
 );
+
+
+
+create table hub_api.fine_code
+(
+	fine_code_id integer not null  constraint fine_code_pk  primary key,
+	fine_code varchar(4) not null,
+	fine_description varchar(200) not null,
+	fine_abbreviation varchar(4),
+	parent_id integer
+)
+
+create sequence hub_api.fine_code_seq
+	minvalue 1000
+	maxvalue 9999999999999
+	cache 20
+	cycle;
+
+grant select, update, usage on sequence hub_api.fine_code_seq to hub_api_user;
+
+
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (1, '9999', 'ریشه', 'ROOT', null, null);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (2, '8888', 'جریمه', 'FINE', 1, null);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (3, '7777', 'پارکینگ', 'PARK', 1, null);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (7, '7004', 'پارکینگ مسقف معمولی', 'PIO', 3, 20);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (6, '7003', 'پارک حاشیه‌ای سوپر ممتاز', 'POS', 3, 20);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (9, '7006', 'پارکینگ مسقف سوپرممتاز', 'PIS', 3, 30);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (4, '7001', 'پارک حاشیه‌ای معمولی', 'POO', 3, 10);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (8, '7005', 'پارکینگ مسقف ممتاز', 'PIV', 3, 25);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (10, '8001', 'توقف ممنوع', 'FPF', 2, 50);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (11, '8002', 'پارک دوبل', 'FPD', 2, 55);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (5, '7002', 'پارک حاشیه ای ممتاز', 'POV', 3, 15);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (1, '9999', 'ریشه', 'ROOT', null, null);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (2, '8888', 'جریمه', 'FINE', 1, null);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (3, '7777', 'پارکینگ', 'PARK', 1, null);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (7, '7004', 'پارکینگ مسقف معمولی', 'PIO', 3, 20);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (6, '7003', 'پارک حاشیه‌ای سوپر ممتاز', 'POS', 3, 20);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (9, '7006', 'پارکینگ مسقف سوپرممتاز', 'PIS', 3, 30);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (4, '7001', 'پارک حاشیه‌ای معمولی', 'POO', 3, 10);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (8, '7005', 'پارکینگ مسقف ممتاز', 'PIV', 3, 25);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (10, '8001', 'توقف ممنوع', 'FPF', 2, 50);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (11, '8002', 'پارک دوبل', 'FPD', 2, 55);
+insert into hub_api.fine_code (fine_code_id, fine_code, fine_description, fine_abbreviation, parent_id, price) values (5, '7002', 'پارک حاشیه ای ممتاز', 'POV', 3, 15);

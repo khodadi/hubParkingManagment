@@ -1,8 +1,10 @@
 package com.dao.entity;
 
 import com.basedata.MachineType;
+import com.basedata.StateOfMachine;
 import com.service.dto.MachineDto;
 import com.utility.DateUtility;
+import com.utility.StringUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ import java.sql.Timestamp;
  **/
 
 @Entity()
-@Table(name = "MACHINE",schema = "hub_api")
+@Table(name = "MACHINES",schema = "hub_api")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,8 +31,8 @@ public class Machine {
         this.identifierCode = dto.getIdentifierCode();
         this.machineType = dto.getMachineType();
         this.timeInterval = dto.getTimeInterval();
-        this.state = dto.isState();
-        this.createId = 10L;
+        this.state = dto.getState();
+        this.createId = StringUtility.getCurrentUserId();
         this.startDate = DateUtility.getCurrentDate();
         this.endDate = null;
     }
@@ -48,7 +50,7 @@ public class Machine {
     @Column(name = "MACHINE_TYPE")
     private MachineType machineType;
 
-    @Column(name = "CREATE_ID")
+    @Column(name = "CREATOR_ID")
     private Long createId;
 
     @Column(name = "START_DATE")
@@ -61,6 +63,6 @@ public class Machine {
     private int timeInterval;
 
     @Column(name = "STATE")
-    private boolean state;
+    private StateOfMachine state;
 
 }

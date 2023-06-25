@@ -4,11 +4,10 @@ package com.service;
 import com.api.form.OutputAPIForm;
 import com.basedata.CodeException;
 import com.dao.entity.Machine;
+import com.dao.repo.IFineCode;
 import com.dao.repo.IMachine;
 import com.service.dto.BaseMachineDto;
 import com.service.dto.MachineDto;
-import com.utility.DateUtility;
-import com.utility.NumberUtility;
 import com.utility.StringUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,8 +47,6 @@ public class MachineSrv implements IMachineSrv{
         return retVal;
     }
 
-
-
     public OutputAPIForm validationMachine(MachineDto dto){
         OutputAPIForm retVal = new OutputAPIForm();
         try{
@@ -65,5 +62,7 @@ public class MachineSrv implements IMachineSrv{
         }
         return retVal;
     }
+
+
 
 }

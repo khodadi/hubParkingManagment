@@ -43,7 +43,7 @@ public class EvnUsersSrv implements IEvnUsersSrv, UserDetailsService {
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getUserType().toString()));
-        return new org.springframework.security.core.userdetails.User(user.getUserName(),user.getPassword(),authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUserName() +":"+user.getUserId(),user.getPassword(),authorities);
     }
 
     @Override

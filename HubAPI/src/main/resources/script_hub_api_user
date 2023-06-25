@@ -21,3 +21,24 @@ CREATE TABLE hub_api.MACHINE_READER (
         API_DATE_TIME         date,
         GPS_ERROR             float4
 );
+
+
+
+
+WITH RECURSIVE generation AS (
+    SELECT  f.fine_code_id,f.fine_code, f.fine_description, f.fine_abbreviation,f.parent_id, 1 AS level
+    FROM   hub_api.fine_code f
+    where f.fine_code = CASE WHEN LENGTH('7777') = 0  THEN f.fine_code
+                             ELSE '7777'
+                        END
+         and
+        f.fine_abbreviation = CASE WHEN LENGTH('') = 0  THEN f.fine_abbreviation
+                                   ELSE '7777'
+                              END
+    UNION  ALL
+    SELECT  child.fine_code_id,child.fine_code, child.fine_description, child.fine_abbreviation,child.parent_id, g.level + 1 AS level
+    FROM  hub_api.fine_code child
+               JOIN  generation g   ON child.parent_id = g.fine_code_id
+
+)
+select * from generation

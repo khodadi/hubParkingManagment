@@ -33,6 +33,6 @@ public class BaseMachineDto extends MachineDto{
         this.setIdentifierCode(machine.getIdentifierCode());
         this.setMachineType(machine.getMachineType());
         this.setTimeInterval(machine.getTimeInterval());
-        this.setState(machine.isState());
+        this.setState(machine.getState());
     }
 }
