@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "948205d4-a431-4035-8b0c-b7ece79cbb15",
+		"name": "Hub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "khodadi",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/authentication/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"authentication",
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpIiwicm9sZSI6WyJvcmRpbmFyeSJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTEvYXV0aGVudGljYXRpb24vYXBpL2xvZ2luIiwiZXhwIjoxNjg3MTc1NjA2fQ.bFMtFIxW35IzS-4HDbR_zSZbVmpJ1ek6rxulPUNp7n0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"masood\",\r\n    \"lastName\":\"abrishamchi\",\r\n    \"userName\":\"abrishamchi\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localHost:8090/authentication/api/v1/user/save",
+							"protocol": "http",
+							"host": [
+								"localHost"
+							],
+							"port": "8090",
+							"path": [
+								"authentication",
+								"api",
+								"v1",
+								"user",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "readEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpIiwicm9sZSI6WyJvcmRpbmFyeSJdLCJpc3MiOiJodHRwOi8vMTcyLjE2LjExLjExOjgwOTEvYXV0aGVudGljYXRpb24vYXBpL2xvZ2luIiwiZXhwIjoxNjg3MTgzNjMyfQ.fWPQYrV6qzmqx8m5IYj7NdhqLQZXWeJj9o9L8lqFYP4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identifierCode\":\"52n32466\",\r\n    \"parkingLotCode\":\"142536521427\",\r\n    \"fineCode\":\"0002\",\r\n    \"machineCode\":\"52n32366\",\r\n    \"locationLatitude\":10.5,\r\n    \"locationLongitude\":11.84,\r\n    \"readerDateTime\":1687171479000,\r\n    \"gpsError\":0.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hub/api/v1/reader/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hub",
+								"api",
+								"v1",
+								"reader",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Machine",
+			"item": [
+				{
+					"name": "addMachine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpIiwicm9sZSI6WyJvcmRpbmFyeSJdLCJpc3MiOiJodHRwOi8vOTEuMTA3LjE5MS45OTo4MDkxL2F1dGhlbnRpY2F0aW9uL2FwaS9sb2dpbiIsImV4cCI6MTY4NzYxMDAyM30.vw2pD5vnKbCtsZQoFoQVUsrrrn09lpz2TzHv6i8TnV4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identifierCode\":\"52n32366\",\r\n    \"machineType\":0,\r\n    \"timeInterval\":1,\r\n    \"state\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8092/hub/api/v1/machine/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"hub",
+								"api",
+								"v1",
+								"machine",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Base Data",
+			"item": [
+				{
+					"name": "addMachine Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpIiwicm9sZSI6WyJvcmRpbmFyeSJdLCJpc3MiOiJodHRwOi8vOTEuMTA3LjE5MS45OTo4MDkxL2F1dGhlbnRpY2F0aW9uL2FwaS9sb2dpbiIsImV4cCI6MTY4NzYxMDAyM30.vw2pD5vnKbCtsZQoFoQVUsrrrn09lpz2TzHv6i8TnV4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identifierCode\":\"52n32366\",\r\n    \"machineType\":0,\r\n    \"timeInterval\":1,\r\n    \"state\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8092/hub/api/v1/machine/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"hub",
+								"api",
+								"v1",
+								"machine",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
