@@ -3,6 +3,7 @@ package com.dao.repo;
 import com.dao.entity.FineCode;
 import com.dao.entity.Machine;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 
@@ -15,5 +16,5 @@ import java.util.ArrayList;
 
 public interface IFineCode extends JpaRepository<FineCode,Long> {
 
-    ArrayList<FineCode> getFineCodeWithCri(String fineCode,String fineAbbreviation);
+    ArrayList<FineCode> getAll();
 }
