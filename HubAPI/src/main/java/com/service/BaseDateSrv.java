@@ -2,6 +2,7 @@ package com.service;
 
 import com.api.form.OutputAPIForm;
 import com.dao.entity.FineCode;
+import com.dao.repo.ICharacterMapping;
 import com.dao.repo.IFineCode;
 import com.service.cri.CriFineCode;
 import com.service.dto.FineCodeDto;
@@ -24,9 +25,11 @@ import java.util.List;
 public class BaseDateSrv implements IBaseDateSrv{
 
     public final IFineCode fineCodeRepo;
+    public final ICharacterMapping characterMappingRepo;
 
-    public BaseDateSrv(IFineCode fineCodeRepo) {
+    public BaseDateSrv(IFineCode fineCodeRepo, ICharacterMapping characterMappingRepo) {
         this.fineCodeRepo = fineCodeRepo;
+        this.characterMappingRepo = characterMappingRepo;
     }
 
     public OutputAPIForm<ArrayList<FineCodeDto>> getAllFineCode(CriFineCode criFineCode){
@@ -37,6 +40,8 @@ public class BaseDateSrv implements IBaseDateSrv{
         retVal.setData(fineCodeDtos);
         return retVal;
     }
+
+
 
     public void convertEntToDto(ArrayList<FineCodeDto> retVal, List<FineCode> fineCodes){
         if(fineCodes != null){

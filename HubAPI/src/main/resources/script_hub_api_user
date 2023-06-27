@@ -42,3 +42,17 @@ WITH RECURSIVE generation AS (
 
 )
 select * from generation
+
+
+create table hub_api.character_mapping
+(
+	character_mapping_id int,
+	latin_char varchar(4) not null,
+	per_char varchar(4) not null
+);
+
+create sequence hub_api.character_mapping_seq
+	minvalue 1000
+	maxvalue 99999999999
+	cache 10
+	cycle;
