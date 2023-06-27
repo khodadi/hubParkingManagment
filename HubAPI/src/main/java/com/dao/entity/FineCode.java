@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Creator 6/25/2023
@@ -34,7 +35,7 @@ public class FineCode {
     private Long parentId;
     @OneToMany(mappedBy = "parentId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("fineCode")
-    private ArrayList<FineCode> children;
+    private List<FineCode> children;
 
     @Column(name ="PRICE")
     private Long price;

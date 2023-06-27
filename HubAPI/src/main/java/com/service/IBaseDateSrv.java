@@ -5,6 +5,8 @@ import com.service.cri.CriFineCode;
 import com.service.dto.FineCodeDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * @Creator 6/25/2023
  * @Project IntelliJ IDEA
@@ -13,5 +15,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IBaseDateSrv {
-    OutputAPIForm<FineCodeDto> getAllFineCode(CriFineCode criFineCode);
+    OutputAPIForm<ArrayList<FineCodeDto>> getAllFineCode(CriFineCode criFineCode);
 }

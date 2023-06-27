@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Creator 6/25/2023
@@ -28,9 +29,46 @@ public class BaseDateSrv implements IBaseDateSrv{
         this.fineCodeRepo = fineCodeRepo;
     }
 
-    public OutputAPIForm<FineCodeDto> getAllFineCode(CriFineCode criFineCode){
-        OutputAPIForm<FineCodeDto> retVal = new OutputAPIForm<>();
-        ArrayList<FineCode> fineCodes = fineCodeRepo.getAll();
+    public OutputAPIForm<ArrayList<FineCodeDto>> getAllFineCode(CriFineCode criFineCode){
+        OutputAPIForm<ArrayList<FineCodeDto>> retVal = new OutputAPIForm<>();
+        ArrayList<FineCodeDto> fineCodeDtos = new ArrayList<>();
+        List<FineCode> fineCodes = fineCodeRepo.getFineCodeByCri(criFineCode.getFineCode(), criFineCode.getFineAbbreviation());
+        convertEntToDto(fineCodeDtos,fineCodes);
+        retVal.setData(fineCodeDtos);
         return retVal;
     }
+
+    public void convertEntToDto(ArrayList<FineCodeDto> retVal, List<FineCode> fineCodes){
+        if(fineCodes != null){
+            for(FineCode fineCode:fineCodes){
+                convertEntToDto(retVal,fineCode);
+            }
+        }
+    }
+
+    public void convertEntToDto(ArrayList<FineCodeDto> retVal,FineCode fineCode){
+        if(!addNode(retVal,fineCode) && !retVal.contains(new FineCodeDto(fineCode))){
+            retVal.add(new FineCodeDto(fineCode));
+        }
+        convertEntToDto(retVal,fineCode.getChildren());
+    }
+
+    public boolean addNode(ArrayList<FineCodeDto> retVal,FineCode fineCode){
+        boolean result = false;
+        if(retVal != null){
+            for(FineCodeDto fineCodeDto:retVal){
+                if(fineCodeDto.getFineId().equals(fineCode.getParentId())){
+                    FineCodeDto fc = new FineCodeDto(fineCode);
+                    if(!fineCodeDto.getChild().contains(fc)){
+                        fineCodeDto.getChild().add(fc);
+                    }
+                    result = true;
+                    break;
+                }else{
+                    result |= addNode(fineCodeDto.getChild(),fineCode);
+                }
+            }
+        }
+        return result;
+   }
 }
