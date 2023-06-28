@@ -21,4 +21,5 @@ public class MachineReaderDto {
     private BigDecimal locationLongitude;
     private Timestamp readerDateTime;
     private Double gpsError;
+    private byte[] image;
 }

@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class MachineReader {
 
-    public MachineReader(MachineReaderDto dto){
+    public MachineReader(MachineReaderDto dto,Long imageId){
         this.setIdentifierCode(dto.getIdentifierCode());
         this.setParkingLotCode(dto.getParkingLotCode());
         this.setFineCode(dto.getFineCode());
@@ -26,6 +26,7 @@ public class MachineReader {
         this.setReaderDateTime(dto.getReaderDateTime());
         this.setApiDateTime(new Timestamp(System.currentTimeMillis()));
         this.setGpsError(dto.getGpsError());
+        this.setIdentifierPicId(imageId);
     }
 
     @Id
@@ -42,6 +43,9 @@ public class MachineReader {
 
     @Column(name = "USER_ID")
     private Long userId;
+
+    @Column(name = "IDENTIFIER_PIC_ID")
+    private Long IdentifierPicId;
 
     @Column(name = "FINE_CODE",length = 4)
     private String fineCode;

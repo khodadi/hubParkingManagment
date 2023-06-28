@@ -2,7 +2,9 @@ package com.service;
 
 import com.api.form.OutputAPIForm;
 import com.basedata.CodeException;
+import com.dao.entity.IdentifierPic;
 import com.dao.entity.MachineReader;
+import com.dao.repo.IIdentifierPic;
 import com.dao.repo.IMachineReader;
 import com.service.dto.MachineReaderDto;
 import com.utility.DateUtility;
@@ -18,14 +20,18 @@ import javax.transaction.Transactional;
 @Slf4j
 public class MachineReaderSrv implements IMachineReaderSrv{
     private final IMachineReader machineReaderRepo;
+    private final IIdentifierPic identifierPicRepo;
 
-    public MachineReaderSrv(IMachineReader machineReaderRepo) {
+    public MachineReaderSrv(IMachineReader machineReaderRepo, IIdentifierPic identifierPicRepo) {
         this.machineReaderRepo = machineReaderRepo;
+        this.identifierPicRepo = identifierPicRepo;
     }
+
     public OutputAPIForm addMachineReader(MachineReaderDto machineReaderDto){
         OutputAPIForm retVal = validateMachineReaderDto(machineReaderDto);
         try{
-            MachineReader machineReader = new MachineReader(machineReaderDto);
+            IdentifierPic identifierPic = identifierPicRepo.save(new IdentifierPic(null,machineReaderDto.getImage(),machineReaderDto.getIdentifierCode()));
+            MachineReader machineReader = new MachineReader(machineReaderDto,identifierPic.getIdentifierPicId());
             machineReaderRepo.save(machineReader);
         }catch (Exception e){
             retVal.setSuccess(false);

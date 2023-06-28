@@ -22,8 +22,10 @@ spring:
   #----------- config file
   servlet:
     multipart:
-      max-file-size: 2MB
-      max-request-size: 2MB
+      max-file-size: 500KB
+      max-request-size: 500KB
+
+
   #----------- redis config
 #  redis:
 #    host: "172.24.66.76"

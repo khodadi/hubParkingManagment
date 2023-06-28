@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -31,16 +28,29 @@ import java.net.URI;
 @Slf4j
 public class BaseData {
 
-
     @Autowired
     private IBaseDateSrv baseDateSrv;
 
-    @PostMapping("/finecode/list")
+    @GetMapping("/finecode/list")
     public ResponseEntity<OutputAPIForm> saveIdentifyCar(@RequestBody CriFineCode criFineCode){
         OutputAPIForm retVal = new OutputAPIForm();
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/basedata/finecode/list").toUriString());
         try{
             retVal = baseDateSrv.getAllFineCode(criFineCode);
+        }catch (Exception e){
+            log.error("Error in read fine code",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<OutputAPIForm> getBaseData(){
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/basedata/list").toUriString());
+        try{
+            retVal = baseDateSrv.getAllBaseData();
         }catch (Exception e){
             log.error("Error in read fine code",e);
             retVal.setSuccess(false);

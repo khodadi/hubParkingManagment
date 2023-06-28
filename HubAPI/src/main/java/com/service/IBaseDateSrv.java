@@ -2,6 +2,7 @@ package com.service;
 
 import com.api.form.OutputAPIForm;
 import com.service.cri.CriFineCode;
+import com.service.dto.BaseData;
 import com.service.dto.FineCodeDto;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,5 @@ import java.util.ArrayList;
 @Service
 public interface IBaseDateSrv {
     OutputAPIForm<ArrayList<FineCodeDto>> getAllFineCode(CriFineCode criFineCode);
+    OutputAPIForm<ArrayList<BaseData>> getAllBaseData();
 }

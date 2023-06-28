@@ -56,3 +56,33 @@ create sequence hub_api.character_mapping_seq
 	maxvalue 99999999999
 	cache 10
 	cycle;
+
+
+
+create table hub_api.identifier_pic
+(
+	image bytea,
+	identifier_pic_id int
+		constraint identifier_pic_pk
+			primary key,
+	pic_name varchar(50)
+);
+
+create sequence hub_api.identifier_pic_seq
+	minvalue 1000
+	maxvalue 99999999999999
+	cache 20
+	cycle;
+
+
+
+alter table hub_api.machine_reader
+	add identifier_pic_id integer;
+
+
+insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (1, 'a', 'الف');
+insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (2, 'b', 'ب');
+insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (3, 'c', 'پ');
+insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (4, 'd', 'ت');
+insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (5, 'e', 'ث');
+insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (6, 'f', 'د');

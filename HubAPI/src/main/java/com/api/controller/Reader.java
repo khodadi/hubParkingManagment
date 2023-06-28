@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.net.URI;
 
 @RestController
@@ -32,6 +36,10 @@ public class Reader {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/reader/save").toUriString());
         try{
             retVal = machineReaderSrv.addMachineReader(machineReader);
+            ByteArrayInputStream bis = new ByteArrayInputStream(machineReader.getImage());
+            BufferedImage bImage2 = ImageIO.read(bis);
+            ImageIO.write(bImage2, "jpg", new File("F:\\output.jpg") );
+
         }catch (Exception e){
             log.error("Error in save Event",e);
             retVal.setSuccess(false);

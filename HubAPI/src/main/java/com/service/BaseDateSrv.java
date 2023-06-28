@@ -1,14 +1,16 @@
 package com.service;
 
 import com.api.form.OutputAPIForm;
+import com.dao.entity.CharacterMapping;
 import com.dao.entity.FineCode;
 import com.dao.repo.ICharacterMapping;
 import com.dao.repo.IFineCode;
 import com.service.cri.CriFineCode;
+import com.service.dto.BaseData;
 import com.service.dto.FineCodeDto;
+import com.service.dto.KeyValue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,9 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class BaseDateSrv implements IBaseDateSrv{
+
+    public static final String fineCodeStr = "FineCode";
+
 
     public final IFineCode fineCodeRepo;
     public final ICharacterMapping characterMappingRepo;
@@ -40,8 +45,6 @@ public class BaseDateSrv implements IBaseDateSrv{
         retVal.setData(fineCodeDtos);
         return retVal;
     }
-
-
 
     public void convertEntToDto(ArrayList<FineCodeDto> retVal, List<FineCode> fineCodes){
         if(fineCodes != null){
@@ -76,4 +79,24 @@ public class BaseDateSrv implements IBaseDateSrv{
         }
         return result;
    }
+
+    public OutputAPIForm<ArrayList<BaseData>> getAllBaseData(){
+       OutputAPIForm<ArrayList<BaseData>> retVal = new OutputAPIForm<>();
+       ArrayList<BaseData> data = new ArrayList<>();
+       data.add(new BaseData(fineCodeStr,getAllCharMapping()));
+       retVal.setData(data);
+       return retVal;
+   }
+
+   public ArrayList<KeyValue> getAllCharMapping(){
+       ArrayList<KeyValue> retVal = new ArrayList<>();
+       List<CharacterMapping> characterMappings = characterMappingRepo.findAll();
+       if(characterMappings != null){
+           for(CharacterMapping cm:characterMappings){
+               retVal.add(new KeyValue(cm));
+           }
+       }
+       return retVal;
+   }
+
 }
