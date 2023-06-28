@@ -132,6 +132,48 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ImageTest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpIiwicm9sZSI6WyJvcmRpbmFyeSJdLCJpc3MiOiJodHRwOi8vMTcyLjE2LjExLjExOjgwOTEvYXV0aGVudGljYXRpb24vYXBpL2xvZ2luIiwiZXhwIjoxNjg3MTgzNjMyfQ.fWPQYrV6qzmqx8m5IYj7NdhqLQZXWeJj9o9L8lqFYP4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identifierCode\":\"52n32466\",\r\n    \"parkingLotCode\":\"142536521427\",\r\n    \"fineCode\":\"0002\",\r\n    \"machineCode\":\"52n32366\",\r\n    \"locationLatitude\":10.5,\r\n    \"locationLongitude\":11.84,\r\n    \"readerDateTime\":1687171479000,\r\n    \"gpsError\":0.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hub/api/v1/reader/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hub",
+								"api",
+								"v1",
+								"reader",
+								"save"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -186,14 +228,14 @@
 			"name": "Base Data",
 			"item": [
 				{
-					"name": "addMachine Copy",
+					"name": "getBaseData",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpIiwicm9sZSI6WyJvcmRpbmFyeSJdLCJpc3MiOiJodHRwOi8vOTEuMTA3LjE5MS45OTo4MDkxL2F1dGhlbnRpY2F0aW9uL2FwaS9sb2dpbiIsImV4cCI6MTY4NzYxMDAyM30.vw2pD5vnKbCtsZQoFoQVUsrrrn09lpz2TzHv6i8TnV4",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpOjEwMjAiLCJyb2xlIjpbIm9yZGluYXJ5Il0sImlzcyI6Imh0dHA6Ly8xNzIuMTYuMTEuMTE6ODA5MS9hdXRoZW50aWNhdGlvbi9hcGkvbG9naW4iLCJleHAiOjE2ODc4NTgzNTl9.q9oMrIt2jqgPuV3lPf2SPagOlEWbkADTVzcUiovYeKY",
 									"type": "string"
 								}
 							]
@@ -202,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"identifierCode\":\"52n32366\",\r\n    \"machineType\":0,\r\n    \"timeInterval\":1,\r\n    \"state\":true\r\n}",
+							"raw": "{\r\n    \"fineCode\": \"\",\r\n    \"fineAbbreviation\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -210,7 +252,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8092/hub/api/v1/machine/save",
+							"raw": "http://localhost:8092/hub/api/v1/basedata/finecode/list",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -220,8 +262,55 @@
 								"hub",
 								"api",
 								"v1",
-								"machine",
-								"save"
+								"basedata",
+								"finecode",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFineCode",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9kYWRpOjEwMjAiLCJyb2xlIjpbIm9yZGluYXJ5Il0sImlzcyI6Imh0dHA6Ly8xNzIuMTYuMTEuMTE6ODA5MS9hdXRoZW50aWNhdGlvbi9hcGkvbG9naW4iLCJleHAiOjE2ODc5NDUwMjd9.MMpDLKb7XVd4nvVR5iugsja1kz9qxpVsVzWAkj2JQf0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fineCode\": \"\",\r\n    \"fineAbbreviation\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8092/hub/api/v1/basedata/finecode/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"hub",
+								"api",
+								"v1",
+								"basedata",
+								"finecode",
+								"list"
 							]
 						}
 					},
