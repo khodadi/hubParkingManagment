@@ -30,7 +30,6 @@ public class ValidateTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-
             try{
                 String token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("Secret".getBytes());
@@ -42,7 +41,6 @@ public class ValidateTokenFilter extends OncePerRequestFilter {
                 Arrays.stream(roles).forEach(role ->{
                     authorities.add(new SimpleGrantedAuthority(role));
                 });
-
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,null,authorities);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 filterChain.doFilter(request,response);

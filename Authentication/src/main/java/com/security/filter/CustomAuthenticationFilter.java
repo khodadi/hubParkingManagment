@@ -28,6 +28,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    public static Long EXPIRE_TOKEN = 3 * 60 * 60 * 1000L;
+    public static Long EXPIRE_REFRESH_TOKEN =6 * 60 * 60 * 1000L;
+
     private AuthenticationManager authenticationManager;
 
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -52,19 +55,17 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User)authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("Secret".getBytes());
-
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + (3 * 60 * 60 * 1000)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (EXPIRE_TOKEN)))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("role",user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
-
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + (6 * 60 * 60 * 1000)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (EXPIRE_REFRESH_TOKEN)))
                 .withIssuer(request.getRequestURL().toString())
-//                .withClaim("role",user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+//              .withClaim("role",user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 //        response.setHeader("access_token",access_token);
 //        response.setHeader("refresh_token",refresh_token);

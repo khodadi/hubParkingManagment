@@ -20,7 +20,6 @@ public class StringUtility extends StringUtils {
         try {
             SecurityContext securityContext = SecurityContextHolder.getContext();
             Authentication authentication = securityContext.getAuthentication();
-
             if ( authentication != null && (authentication instanceof UsernamePasswordAuthenticationToken) ) {
                 userStr = (String) authentication.getPrincipal();
                 retVal = new Long(userStr.indexOf(":") == -1 ?"10":userStr.substring(userStr.indexOf(":")+1));

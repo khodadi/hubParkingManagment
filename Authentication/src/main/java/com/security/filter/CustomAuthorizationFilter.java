@@ -25,22 +25,26 @@ public class CustomAuthorizationFilter  extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/token/refresh")){
+        if(request.getServletPath().equals("/api/login") ){
             filterChain.doFilter(request,response);
         }else{
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try{
                     String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("Secret".getBytes());
+                    Algorithm algorithm = Algorithm.HMAC256("khodadiTest".getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String userName = decodedJWT.getSubject();
-                    String[] roles  = decodedJWT.getClaim("role").asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    Arrays.stream(roles).forEach(role ->{
-                        authorities.add(new SimpleGrantedAuthority(role));
-                    });
+                    if(request.getServletPath().equals("/api/v1/user/refresh")){
+                        authorities.add(new SimpleGrantedAuthority("RefreshToken"));
+                    }else{
+                        String[] roles  = decodedJWT.getClaim("role").asArray(String.class);
+                        Arrays.stream(roles).forEach(role ->{
+                            authorities.add(new SimpleGrantedAuthority(role));
+                        });
+                    }
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,null,authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request,response);

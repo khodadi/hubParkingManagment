@@ -6,6 +6,7 @@ import com.dao.entity.EnvUsers;
 import com.dao.repository.IUserRepo;
 import com.service.dto.EnvUserDto;
 import com.service.dto.EnvUserSaveDto;
+import com.service.dto.UserTokensDto;
 import com.utility.StringUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -100,5 +102,31 @@ public class EvnUsersSrv implements IEvnUsersSrv, UserDetailsService {
         }
         return retVal;
 
+    }
+
+    public ArrayList<String> getRoles(Long userId){
+        ArrayList<String> retVal = new ArrayList<>();
+        try{
+            EnvUsers user =  userRepo.getOne(userId);
+            if(user != null){
+                retVal.add(user.getUserType().toString());
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return retVal;
+
+    }
+
+    public OutputAPIForm<UserTokensDto> generateToken(HttpServletRequest request){
+        OutputAPIForm<UserTokensDto> retVal = new OutputAPIForm<>();
+        ArrayList<String> roles = new ArrayList<>();
+        EnvUsers user =  userRepo.getOne(StringUtility.getCurrentUserId());
+        if(user != null){
+            roles.add(user.getUserType().toString());
+        }
+        UserTokensDto userTokensDto = StringUtility.generateToken( request, roles);
+        retVal.setData(userTokensDto);
+        return retVal;
     }
 }

@@ -12,12 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 @RestController
@@ -29,17 +27,6 @@ public class ManipulateUser {
 
     @Autowired
     private IEvnUsersSrv iEvnUsersSrv;
-
-//    @Operation(
-//            security={ @SecurityRequirement(name="bearerToken") },
-//            parameters={
-//                        @Parameter(
-//                                name="authorization",
-//                                in= ParameterIn.HEADER,
-//                                required=true
-//                        )
-//            }
-//    )
 
     @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @PostMapping("/save")
@@ -62,6 +49,21 @@ public class ManipulateUser {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/load").toUriString());
         try{
             retVal = iEvnUsersSrv.getUser(userName);
+        }catch (Exception e){
+            log.error("Error in load user",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<OutputAPIForm> refreshToken(HttpServletRequest request){
+
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/refresh").toUriString());
+        try{
+            retVal = iEvnUsersSrv.generateToken(request);
         }catch (Exception e){
             log.error("Error in load user",e);
             retVal.setSuccess(false);

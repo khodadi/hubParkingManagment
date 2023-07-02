@@ -39,7 +39,6 @@ public class Reader {
             ByteArrayInputStream bis = new ByteArrayInputStream(machineReader.getImage());
             BufferedImage bImage2 = ImageIO.read(bis);
             ImageIO.write(bImage2, "jpg", new File("F:\\output.jpg") );
-
         }catch (Exception e){
             log.error("Error in save Event",e);
             retVal.setSuccess(false);
