@@ -70,7 +70,7 @@ public class MachineReaderSrv implements IMachineReaderSrv{
             retVal = StringUtility.checkString(dto.getMachineCode(),false,8,8,false,false);
             retVal = retVal.isSuccess()? StringUtility.checkString(dto.getFineCode(),false,4,4,false,true):retVal;
             retVal = retVal.isSuccess()? StringUtility.checkString(dto.getIdentifierCode(),false,8,8,false,false):retVal;
-            retVal = retVal.isSuccess()? StringUtility.checkString(dto.getParkingLotCode(),false,12,50,false,true):retVal;
+            retVal = retVal.isSuccess()? StringUtility.checkString(dto.getParkingLotCode(),false,12,50,false,false):retVal;
             retVal = retVal.isSuccess()? DateUtility.checkDate(dto.getReaderDateTime()):retVal;
             retVal = retVal.isSuccess()? NumberUtility.checkBigNumber(dto.getLocationLatitude()):retVal;
             retVal = retVal.isSuccess()? NumberUtility.checkBigNumber(dto.getLocationLongitude()):retVal;
