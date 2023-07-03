@@ -1,6 +1,7 @@
 package com.service;
 
 import com.api.form.OutputAPIForm;
+import com.service.dto.BaseMachineDto;
 import com.service.dto.MachineDto;
 
 /**
@@ -11,4 +12,7 @@ import com.service.dto.MachineDto;
 
 public interface IMachineSrv {
     OutputAPIForm registerMachine(MachineDto dto);
+    BaseMachineDto getMachine(String identifierCode);
+
+    OutputAPIForm getAllMachineCurrentUser(int pageNumber);
 }

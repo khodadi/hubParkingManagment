@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.imageio.ImageIO;
@@ -36,9 +33,19 @@ public class Reader {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/reader/save").toUriString());
         try{
             retVal = machineReaderSrv.addMachineReader(machineReader);
-            ByteArrayInputStream bis = new ByteArrayInputStream(machineReader.getImage());
-            BufferedImage bImage2 = ImageIO.read(bis);
-            ImageIO.write(bImage2, "jpg", new File("F:\\output.jpg") );
+        }catch (Exception e){
+            log.error("Error in save Event",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+    @GetMapping("/load")
+    public ResponseEntity<OutputAPIForm> loadEvent(@RequestParam Long pageNumber){
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/reader/load").toUriString());
+        try{
+            retVal = machineReaderSrv.getEventByCurrentUserId(pageNumber == null? 0:pageNumber.intValue());
         }catch (Exception e){
             log.error("Error in save Event",e);
             retVal.setSuccess(false);

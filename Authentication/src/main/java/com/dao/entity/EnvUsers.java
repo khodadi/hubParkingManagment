@@ -3,6 +3,7 @@ package com.dao.entity;
 import com.basedata.DeactivationReason;
 import com.basedata.UserType;
 import com.service.dto.EnvUserSaveDto;
+import com.utility.StringUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class EnvUsers extends ABaseEntity {
         this.setUserType(UserType.ordinary);
         this.setUnsuccessfulTries(0);
         this.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        this.setCreatorUserId(1L);
+        this.setCreatorUserId(StringUtility.getCurrentUserId());
     }
 
     @Id

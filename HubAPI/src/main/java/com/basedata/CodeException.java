@@ -13,7 +13,8 @@ public enum CodeException {
     INVALID_USERNAME(9),
     INVALID_FORMAT(10),
     INVALID_DATE(11),
-    DUPLICATE_MACHINE(12);
+    DUPLICATE_MACHINE(12),
+    INVALID_MACHINE(13);
 
     private int codeException;
     CodeException(int code) {

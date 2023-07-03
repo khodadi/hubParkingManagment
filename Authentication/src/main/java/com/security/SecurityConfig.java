@@ -58,9 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui/**"
         ).permitAll();
         http.authorizeRequests().antMatchers("/api/login/**","/api/token/refresh/**").permitAll();
-//        http.authorizeRequests().antMatchers("/api/v1/user/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/user/**").hasAnyAuthority("ordinary");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/user/save").hasAnyAuthority("admin");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/user/load").hasAnyAuthority("ordinary");
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/user/refresh").hasAnyAuthority("RefreshToken");
+
+
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -72,14 +75,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Binder.get(environment).bind("cors.allowed-origins", Bindable.listOf(String.class)).get());
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Binder.get(environment).bind("cors.allowed-origins", Bindable.listOf(String.class)).get());
+////        configuration.setAllowedMethods(Arrays.asList("GET","POST","FETCH"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 }

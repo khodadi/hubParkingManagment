@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -44,7 +45,16 @@ public class EvnUsersSrv implements IEvnUsersSrv, UserDetailsService {
             log.info("The User find in database : {}",username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getUserType().toString()));
+        if(user.getUserType().toString().equals("ordinary")){
+            authorities.add(new SimpleGrantedAuthority(user.getUserType().toString()));
+        }else if(user.getUserType().toString().equals("admin")){
+            authorities.add(new SimpleGrantedAuthority(user.getUserType().toString()));
+            authorities.add(new SimpleGrantedAuthority("ordinary"));
+        }else if(user.getUserType().toString().equals("superAdmin")){
+            authorities.add(new SimpleGrantedAuthority(user.getUserType().toString()));
+            authorities.add(new SimpleGrantedAuthority("ordinary"));
+            authorities.add(new SimpleGrantedAuthority("admin"));
+        }
         return new org.springframework.security.core.userdetails.User(user.getUserName() +":"+user.getUserId(),user.getPassword(),authorities);
     }
 
@@ -84,17 +94,17 @@ public class EvnUsersSrv implements IEvnUsersSrv, UserDetailsService {
         return retVal;
     }
 
-    public OutputAPIForm getUser(String userName){
+    public OutputAPIForm getUsersCreated(){
         OutputAPIForm retVal = new OutputAPIForm();
+        ArrayList<EnvUserDto> usersCreated = new ArrayList<>();
         try{
-            EnvUsers user =  userRepo.findByUserName(userName);
-            if(user != null){
-                EnvUserDto userDto = new EnvUserDto(user);
-                retVal.setData(userDto);
-            }else{
-                retVal.setSuccess(false);
-                retVal.getErrors().add(CodeException.INVALID_USERNAME);
+            List<EnvUsers> users = userRepo.findAllByCreatorUserId(StringUtility.getCurrentUserId());
+            if(users != null){
+                for(EnvUsers userCreated:users){
+                    usersCreated.add(new EnvUserDto(userCreated));
+                }
             }
+            retVal.setData(usersCreated);
         }catch (Exception e){
             retVal.setSuccess(false);
             retVal.getErrors().add(CodeException.INVALID_USERNAME);

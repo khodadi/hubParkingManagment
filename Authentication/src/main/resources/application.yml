@@ -30,5 +30,10 @@ cors:
   allowed-origins:
     - http://91.107.191.99:8090
     - http://91.107.191.99:8091
+    - http://91.107.191.99:8090/authentication
+    - http://91.107.191.99:8091/authentication
     - http://127.0.0.1:8090
     - http://127.0.0.1:8091
+    - http://192.168.0.50:8091
+    - http://localhost:8090
+    - http://192.168.0.50:8091

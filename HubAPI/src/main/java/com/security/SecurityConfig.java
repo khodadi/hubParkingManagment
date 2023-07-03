@@ -35,9 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/oauth/token",
                 "/swagger-ui/**"
         ).permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/reader/**").hasAnyAuthority("ordinary");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/machine/**").hasAnyAuthority("ordinary");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/basedata/**").hasAnyAuthority("ordinary");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/reader/save").hasAnyAuthority("ordinary");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/reader/load").hasAnyAuthority("ordinary");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/machine/save").hasAnyAuthority("admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/machine/load").hasAnyAuthority("ordinary");
+
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/basedata/finecode/list").hasAnyAuthority("admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/basedata/list").hasAnyAuthority("admin");
+
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new ValidateTokenFilter(getApplicationContext()), BasicAuthenticationFilter.class);
     }

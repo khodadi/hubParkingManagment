@@ -1,6 +1,7 @@
 package com.dao.entity;
 
 import com.service.dto.MachineReaderDto;
+import com.utility.StringUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,12 @@ public class MachineReader {
         this.setReaderDateTime(dto.getReaderDateTime());
         this.setApiDateTime(new Timestamp(System.currentTimeMillis()));
         this.setGpsError(dto.getGpsError());
+        this.setUserId(StringUtility.getCurrentUserId());
         this.setIdentifierPicId(imageId);
+    }
+
+    public MachineReader(MachineReaderDto dto){
+        this(dto,null);
     }
 
     @Id

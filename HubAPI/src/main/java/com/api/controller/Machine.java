@@ -25,17 +25,28 @@ import java.net.URI;
 @RequiredArgsConstructor
 @Slf4j
 public class Machine {
-
-
     @Autowired
     private IMachineSrv machineSrv;
-
     @PostMapping("/save")
     public ResponseEntity<OutputAPIForm> saveIdentifyCar(@RequestBody MachineDto machine){
         OutputAPIForm retVal = new OutputAPIForm();
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/machine/save").toUriString());
         try{
             retVal = machineSrv.registerMachine(machine);
+        }catch (Exception e){
+            log.error("Error in save Event",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+
+    @GetMapping("/load")
+    public ResponseEntity<OutputAPIForm> loadIdentifyCar(@RequestParam Long pageNumber){
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/machine/save").toUriString());
+        try{
+            retVal = machineSrv.getAllMachineCurrentUser(pageNumber == null ?0:pageNumber.intValue());
         }catch (Exception e){
             log.error("Error in save Event",e);
             retVal.setSuccess(false);

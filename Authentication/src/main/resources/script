@@ -3,7 +3,8 @@ CREATE USER hub_user WITH PASSWORD '123456';
 CREATE TABLESPACE hub_data OWNER hub_user LOCATION 'D:\\Tablespace\\Hub\\Data';
 CREATE DATABASE hub OWNER hub_user TABLESPACE hub_data;
 
-CREATE SCHcreacreate EMA hub_auth AUTHORIZATION hub_user;
+CREATE SCH crea
+create EMA hub_auth AUTHORIZATION hub_user;
 
 grant all privileges on database hub to hub_user;
 grant all privileges on database hub to hub_auth_user;

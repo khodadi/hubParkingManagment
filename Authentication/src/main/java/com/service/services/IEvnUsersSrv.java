@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface IEvnUsersSrv {
     OutputAPIForm<EnvUserDto> insertUser(EnvUserSaveDto userDto);
-    OutputAPIForm getUser(String userName);
+    OutputAPIForm getUsersCreated();
     ArrayList<String> getRoles(Long userId);
     OutputAPIForm<UserTokensDto> generateToken(HttpServletRequest request);
 }

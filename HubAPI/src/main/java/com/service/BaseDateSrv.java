@@ -1,6 +1,7 @@
 package com.service;
 
 import com.api.form.OutputAPIForm;
+import com.basedata.MachineType;
 import com.dao.entity.CharacterMapping;
 import com.dao.entity.FineCode;
 import com.dao.repo.ICharacterMapping;
@@ -26,7 +27,9 @@ import java.util.List;
 @Slf4j
 public class BaseDateSrv implements IBaseDateSrv{
 
-    public static final String fineCodeStr = "FineCode";
+    public static final String CodingPlaque = "CodingPlaque";
+    public static final String MachineType = "MachineType";
+    public static final String MachineStatus = "MachineStatus";
 
 
     public final IFineCode fineCodeRepo;
@@ -83,18 +86,24 @@ public class BaseDateSrv implements IBaseDateSrv{
     public OutputAPIForm<ArrayList<BaseData>> getAllBaseData(){
        OutputAPIForm<ArrayList<BaseData>> retVal = new OutputAPIForm<>();
        ArrayList<BaseData> data = new ArrayList<>();
-       data.add(new BaseData(fineCodeStr,getAllCharMapping()));
+       data.add(new BaseData(CodingPlaque,getAllCharMapping()));
+       data.add(new BaseData(MachineType, com.basedata.MachineType.getAllMachineCode()));
+       data.add(new BaseData(MachineStatus, com.basedata.StateOfMachine.getAllStateOfMachine()));
        retVal.setData(data);
        return retVal;
    }
 
    public ArrayList<KeyValue> getAllCharMapping(){
        ArrayList<KeyValue> retVal = new ArrayList<>();
-       List<CharacterMapping> characterMappings = characterMappingRepo.findAll();
-       if(characterMappings != null){
-           for(CharacterMapping cm:characterMappings){
-               retVal.add(new KeyValue(cm));
+       try{
+           List<CharacterMapping> characterMappings = characterMappingRepo.findAll();
+           if(characterMappings != null){
+               for(CharacterMapping cm:characterMappings){
+                   retVal.add(new KeyValue(cm));
+               }
            }
+       }catch (Exception e){
+            log.error(e.getMessage());
        }
        return retVal;
    }
