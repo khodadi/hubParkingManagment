@@ -7,15 +7,19 @@ import com.dao.entity.IdentifierPic;
 import com.dao.entity.MachineReader;
 import com.dao.repo.IIdentifierPic;
 import com.dao.repo.IMachineReader;
+import com.service.cri.CriEvent;
 import com.service.dto.BaseMachineDto;
-import com.service.dto.MachineDto;
+import com.service.dto.BaseMachineReaderDto;
+import com.service.dto.ImageDto;
 import com.service.dto.MachineReaderDto;
 import com.utility.DateUtility;
 import com.utility.NumberUtility;
 import com.utility.StringUtility;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,13 +34,29 @@ public class MachineReaderSrv implements IMachineReaderSrv{
     private final IMachineReader machineReaderRepo;
     private final IIdentifierPic identifierPicRepo;
 
-    public static int pageSize = 2;
+    public static int pageSize = 30;
 
     private final IMachineSrv machineSrv;
     public MachineReaderSrv(IMachineReader machineReaderRepo, IIdentifierPic identifierPicRepo, IMachineSrv machineSrv) {
         this.machineReaderRepo = machineReaderRepo;
         this.identifierPicRepo = identifierPicRepo;
         this.machineSrv = machineSrv;
+    }
+
+    public OutputAPIForm getImage(ImageDto cri){
+        OutputAPIForm retVal = new OutputAPIForm();
+        try{
+            ImageDto result = new ImageDto();
+            IdentifierPic identifierPic = identifierPicRepo.getOne(cri.getIdentifierPicId());
+            if(identifierPic != null){
+                result.setImage(identifierPic.getImage());
+                result.setIdentifierCode(identifierPic.getPicName());
+                retVal.setData(result);
+            }
+        }catch (Exception e){
+
+        }
+        return retVal;
     }
 
     public OutputAPIForm addMachineReader(MachineReaderDto machineReaderDto){
@@ -93,7 +113,7 @@ public class MachineReaderSrv implements IMachineReaderSrv{
     public OutputAPIForm getEventByCurrentUserId(int pageNumber){
         OutputAPIForm retVal = new OutputAPIForm();
         try{
-            ArrayList<MachineReaderDto> machineReaders = getEventBy(StringUtility.getCurrentUserId(),pageNumber,pageSize+1);
+            ArrayList<BaseMachineReaderDto> machineReaders = getEventBy(StringUtility.getCurrentUserId(),pageNumber,pageSize+1);
             if(machineReaders.size() == pageSize+1){
                 retVal.setNextPage(true);
                 machineReaders.remove(pageSize);
@@ -106,16 +126,49 @@ public class MachineReaderSrv implements IMachineReaderSrv{
         return retVal;
     }
 
-    public ArrayList<MachineReaderDto> getEventBy(Long userId,int pageNumber,int size){
-        ArrayList<MachineReaderDto> retVal = new ArrayList<>();
-        Pageable pageable = PageRequest.of(pageNumber< 0 ?0:pageNumber,size);
+    public OutputAPIForm getAllEventUser(CriEvent criEvent){
+        OutputAPIForm retVal = new OutputAPIForm();
+        try{
+            retVal.setData(getAllEvent(criEvent));
+        }catch (Exception e){
+            retVal.setSuccess(false);
+        }
+        return retVal;
+    }
+
+    public ArrayList<BaseMachineReaderDto> getAllEvent(CriEvent criEvent){
+        ArrayList<BaseMachineReaderDto> retVal = new ArrayList<>();
+        if(criEvent.getUserId() ==null){
+            retVal = getEventBy(0,pageSize);
+        }else{
+            retVal = getEventBy(criEvent.getUserId(),0,pageSize);
+        }
+        return retVal;
+    }
+
+    public ArrayList<BaseMachineReaderDto> getEventBy(Long userId,int pageNumber,int size){
+        ArrayList<BaseMachineReaderDto> retVal = new ArrayList<>();
+        Pageable pageable = PageRequest.of(pageNumber< 0 ?0:pageNumber,size,Sort.by(Sort.Direction.DESC,"MachineReaderId"));
         List<MachineReader> events = machineReaderRepo.getAllByUserId(userId,pageable);
         if(Objects.nonNull(events)){
             for(MachineReader event:events){
-                retVal.add(new MachineReaderDto(event));
+                retVal.add(new BaseMachineReaderDto(event));
             }
         }
         return retVal;
     }
+
+    public ArrayList<BaseMachineReaderDto> getEventBy(int pageNumber,int size){
+        ArrayList<BaseMachineReaderDto> retVal = new ArrayList<>();
+        Pageable pageable = PageRequest.of(pageNumber< 0 ?0:pageNumber,size,Sort.by(Sort.Direction.DESC,"MachineReaderId"));
+        Page<MachineReader> events = machineReaderRepo.findAll(pageable);
+        if(Objects.nonNull(events)){
+            for(MachineReader event:events){
+                retVal.add(new BaseMachineReaderDto(event));
+            }
+        }
+        return retVal;
+    }
+
 
 }

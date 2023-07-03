@@ -37,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         ).permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/reader/save").hasAnyAuthority("ordinary");
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/reader/load").hasAnyAuthority("ordinary");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/reader/load/image").hasAnyAuthority("superAdmin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/reader/load/event").hasAnyAuthority("superAdmin");
 
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/machine/save").hasAnyAuthority("admin");
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/machine/load").hasAnyAuthority("ordinary");

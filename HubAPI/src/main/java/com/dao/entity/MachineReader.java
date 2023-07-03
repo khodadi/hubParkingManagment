@@ -39,7 +39,7 @@ public class MachineReader {
     @Column(name = "MACHINE_READER_ID")
     @GeneratedValue(generator = "MACHINE_READER_SEQ", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "MACHINE_READER_SEQ", allocationSize = 1, sequenceName = "MACHINE_READER_SEQ",schema = "hub_api")
-    private Long MachineReaderId;
+    private Long machineReaderId;
 
     @Column(name ="IDENTIFIER_CODE",length = 8)
     private String identifierCode;

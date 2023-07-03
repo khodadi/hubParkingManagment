@@ -26,6 +26,7 @@ public class MachineReaderDto {
         this.setReaderDateTime(ent.getReaderDateTime());
         this.setApiDateTime(ent.getApiDateTime());
         this.setGpsError(ent.getGpsError());
+        this.setImageId(ent.getIdentifierPicId());
     }
     private Long   MachineReaderId;
     private String identifierCode;
@@ -38,4 +39,5 @@ public class MachineReaderDto {
     private Timestamp apiDateTime;
     private Double gpsError;
     private byte[] image;
+    private Long imageId;
 }

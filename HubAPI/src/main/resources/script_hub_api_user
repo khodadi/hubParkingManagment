@@ -86,3 +86,15 @@ insert into hub_api.character_mapping (character_mapping_id, latin_char, per_cha
 insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (4, 'd', 'ت');
 insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (5, 'e', 'ث');
 insert into hub_api.character_mapping (character_mapping_id, latin_char, per_char) values (6, 'f', 'د');
+
+
+
+alter table hub_api.machine_reader alter column reader_date_time type timestamp using reader_date_time::timestamp;
+
+alter table hub_api.machine_reader alter column api_date_time type timestamp using api_date_time::timestamp;
+
+alter table hub_api.machine_reader alter column location_latitude type float4 using location_latitude::float4;
+
+
+alter table hub_api.machine_reader alter column location_longitude type float4 using location_longitude::float4;
+

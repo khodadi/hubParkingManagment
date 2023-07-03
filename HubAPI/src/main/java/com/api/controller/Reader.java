@@ -4,6 +4,8 @@ package com.api.controller;
 import com.api.form.OutputAPIForm;
 import com.basedata.CodeException;
 import com.service.IMachineReaderSrv;
+import com.service.cri.CriEvent;
+import com.service.dto.ImageDto;
 import com.service.dto.MachineReaderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,4 +55,34 @@ public class Reader {
         }
         return ResponseEntity.created(uri).body(retVal);
     }
+
+    @GetMapping("/load/image")
+    public ResponseEntity<OutputAPIForm> loadEventImage(@RequestBody ImageDto image){
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/reader/load").toUriString());
+        try{
+            retVal = machineReaderSrv.getImage(image);
+        }catch (Exception e){
+            log.error("Error in save Event",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+
+    @GetMapping("/load/event")
+    public ResponseEntity<OutputAPIForm> loadAllEvent(@RequestBody CriEvent criEvent){
+        OutputAPIForm retVal = new OutputAPIForm();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/reader/load/event").toUriString());
+        try{
+            retVal = machineReaderSrv.getAllEventUser(criEvent);
+        }catch (Exception e){
+            log.error("Error in save Event",e);
+            retVal.setSuccess(false);
+            retVal.getErrors().add(CodeException.SYSTEM_EXCEPTION);
+        }
+        return ResponseEntity.created(uri).body(retVal);
+    }
+
+
 }
