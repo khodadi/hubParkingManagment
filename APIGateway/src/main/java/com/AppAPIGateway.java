@@ -21,6 +21,7 @@ public class AppAPIGateway extends SpringBootServletInitializer {
         SpringApplication.run(AppAPIGateway.class);
         try{
             System.out.println(InetAddress.getLocalHost().getHostName());
+
         }catch (Exception e){
             e.printStackTrace();
         }
